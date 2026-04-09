@@ -1,12 +1,13 @@
 :root {
-  --primary-color: #6366f1; /* Indigo Moderne */
-  --secondary-color: #10b981; /* Émeraude subtil */
-  --bg-dark: #0f172a; /* Ardoise profond */
-  --text-dark: #1e293b;
-  --text-light: #f8fafc;
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --card-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.5);
+  --primary-color: #4f46e5; /* Indigo Profond */
+  --secondary-color: #059669; /* Émeraude */
+  --bg-main: #f8fafc; /* Fond ultra clair */
+  --bg-panel: #f1f5f9; /* Fond du panneau d'aperçu */
+  --text-main: #0f172a; /* Texte Ardoise */
+  --text-dim: #64748b;
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   --font-main: 'Outfit', sans-serif;
   --font-doc: 'Times New Roman', Times, serif;
 }
@@ -19,10 +20,9 @@
 
 body {
   font-family: var(--font-main);
-  background-color: #020617; /* Noir Ardoise */
-  color: var(--text-light);
+  background-color: var(--bg-main);
+  color: var(--text-main);
   min-height: 100vh;
-  background-image: radial-gradient(circle at 50% 50%, #0f172a 0%, #020617 100%);
 }
 
 #app {
@@ -34,13 +34,12 @@ body {
 /* Header */
 header {
   padding: 1.5rem 2rem;
-  background: rgba(0, 0, 0, 0.3);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--glass-border);
+  background: white;
+  border-bottom: 1px solid var(--card-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.02);
 }
 
 .logo-container {
@@ -85,14 +84,12 @@ main {
 .form-panel {
   padding: 2rem;
   overflow-y: auto;
-  border-right: 1px solid var(--glass-border);
+  border-right: 1px solid var(--card-border);
 }
 
 .card {
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: blur(4px);
-  backdrop-filter: blur(4px);
-  border: 1px solid var(--glass-border);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
   border-radius: 16px;
   padding: 2rem;
   box-shadow: var(--card-shadow);
@@ -114,10 +111,10 @@ label {
 input, select, textarea {
   width: 100%;
   padding: 0.8rem 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--glass-border);
+  background: #fff;
+  border: 1px solid var(--card-border);
   border-radius: 8px;
-  color: white;
+  color: var(--text-main);
   font-family: inherit;
   font-size: 1rem;
   transition: all 0.3s ease;
@@ -126,8 +123,8 @@ input, select, textarea {
 input:focus, select:focus, textarea:focus {
   outline: none;
   border-color: var(--primary-color);
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 0 0 2px rgba(249, 164, 26, 0.2);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
 }
 
 /* Toggles */
@@ -141,9 +138,9 @@ input:focus, select:focus, textarea:focus {
 .toggle-btn {
   padding: 1rem;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--glass-border);
-  color: white;
+  background: #f8fafc;
+  border: 1px solid var(--card-border);
+  color: var(--text-dim);
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
@@ -158,11 +155,12 @@ input:focus, select:focus, textarea:focus {
 }
 
 .toggle-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: #f1f5f9;
+  border-color: var(--text-dim);
 }
 
 .toggle-btn.active {
-  background: rgba(249, 164, 26, 0.15);
+  background: rgba(79, 70, 229, 0.05);
   border-color: var(--primary-color);
   color: var(--primary-color);
 }
@@ -232,6 +230,7 @@ input:focus, select:focus, textarea:focus {
   overflow-y: auto;
   align-items: center;
   padding-bottom: 2rem;
+  background: var(--bg-panel);
 }
 
 .preview-header {
@@ -246,12 +245,12 @@ input:focus, select:focus, textarea:focus {
   width: 100%;
   max-width: 800px;
   background: white;
-  color: var(--text-dark);
+  color: #1e293b;
   min-height: 1000px;
-  padding: 3rem;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  padding: 4rem;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
   font-family: var(--font-doc);
-  line-height: 1.5;
+  line-height: 1.6;
   position: relative;
 }
 
@@ -300,13 +299,13 @@ input:focus, select:focus, textarea:focus {
 }
 .btn-primary {
   background: var(--primary-color);
-  color: var(--bg-dark);
+  color: white;
   border: none;
-  padding: 1rem 2rem;
+  padding: 0.8rem 2rem;
   border-radius: 30px;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(249, 164, 26, 0.4);
+  box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -315,7 +314,7 @@ input:focus, select:focus, textarea:focus {
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(249, 164, 26, 0.6);
+  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
 }
 
 .btn-secondary {
