@@ -9,15 +9,21 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   </head>
   <body>
     <div id="app">
       <header>
         <div class="logo-container">
           <div class="header-title">
-            <h1>Générateur D'IAgraphie</h1>
-            <p>Outil de déclaration d'intégrité intellectuelle</p>
+            <h1 data-i18n="main-title">Générateur D'IAgraphie</h1>
+            <p data-i18n="main-subtitle">Outil de déclaration d'intégrité intellectuelle</p>
           </div>
+        </div>
+        <div class="lang-switcher">
+          <button id="lang-fr" class="active">FR</button>
+          <span>|</span>
+          <button id="lang-en">EN</button>
         </div>
       </header>
 
@@ -25,56 +31,56 @@
         <!-- Form Panel -->
         <section class="form-panel">
           <div class="card">
-            <h3>Identification</h3>
+            <h3 data-i18n="id-title">Identification</h3>
             <div class="form-group">
               <div class="step-badge"></div>
-              <label for="name">Nom complet</label>
-              <input type="text" id="name" placeholder="Prénom Nom" autocomplete="name">
+              <label for="name" data-i18n="id-name">Nom complet</label>
+              <input type="text" id="name" placeholder="Prénom Nom" autocomplete="name" data-i18n-placeholder="placeholder-name">
             </div>
             <div class="form-group">
               <div class="step-badge"></div>
-              <label for="cegep">Établissement</label>
-              <input type="text" id="cegep" placeholder="ex: Votre établissement">
+              <label for="cegep" data-i18n="id-cegep">Établissement</label>
+              <input type="text" id="cegep" placeholder="ex: Votre établissement" data-i18n-placeholder="placeholder-cegep">
             </div>
             <div class="form-group">
               <div class="step-badge"></div>
-              <label for="course">Cours</label>
-              <input type="text" id="course" placeholder="Nom du cours">
+              <label for="course" data-i18n="id-course">Cours</label>
+              <input type="text" id="course" placeholder="Nom du cours" data-i18n-placeholder="placeholder-course">
             </div>
             <div class="form-group">
               <div class="step-badge"></div>
-              <label for="group">Groupe</label>
-              <input type="text" id="group" placeholder="ex: 0001">
+              <label for="group" data-i18n="id-group">Groupe</label>
+              <input type="text" id="group" placeholder="ex: 0001" data-i18n-placeholder="placeholder-group">
             </div>
           </div>
 
           <div class="card">
-            <h3>Utilisation de l'intelligence artificielle</h3>
-            <p class="footer-info ia-description">Avez-vous utilisé un outil d'IA générative pour ce travail ?</p>
+            <h3 data-i18n="ia-usage-title">Utilisation de l'intelligence artificielle</h3>
+            <p class="footer-info ia-description" data-i18n="ia-usage-desc">Avez-vous utilisé un outil d'IA générative pour ce travail ?</p>
             <div class="toggle-group">
               <div class="step-badge"></div>
               <button class="toggle-btn active" id="btn-no-ia">
                 <i class="fa-solid fa-circle-check"></i>
-                <span>Non, aucune IA</span>
+                <span data-i18n="btn-no-ia">Non, aucune IA</span>
               </button>
               <button class="toggle-btn" id="btn-yes-ia">
                 <i class="fa-solid fa-robot"></i>
-                <span>Oui, j'ai utilisé l'IA</span>
+                <span data-i18n="btn-yes-ia">Oui, j'ai utilisé l'IA</span>
               </button>
             </div>
           </div>
 
           <div class="form-advisory">
             <i class="fa-solid fa-lightbulb"></i>
-            <p>La transparence ne pénalise pas votre travail. Elle valorise votre démarche intellectuelle et permet à votre professeur d’évaluer votre contribution de façon juste et éclairée.</p>
+            <p data-i18n="advisory-text">La transparence ne pénalise pas votre travail. Elle valorise votre démarche intellectuelle et permet à votre professeur d’évaluer votre contribution de façon juste et éclairée.</p>
           </div>
 
           <div id="ia-details" class="hide">
             <div class="card">
-              <h3>Détails de l'IAgraphie</h3>
+              <h3 data-i18n="ia-details-title">Détails de l'IAgraphie</h3>
               <div class="alert-info">
                 <i class="fa-solid fa-info-circle"></i>
-                Décrivez comment vous avez utilisé l'IA. Soyez transparent et précis sur les invites (prompts).
+                <span data-i18n="ia-details-info">Décrivez comment vous avez utilisé l'IA. Soyez transparent et précis sur les invites (prompts).</span>
               </div>
               
               <div id="tools-list">
@@ -83,7 +89,7 @@
 
               <button class="add-tool-btn" id="add-tool">
                 <i class="fa-solid fa-plus"></i>
-                Ajouter un outil
+                <span data-i18n="btn-add-tool">Ajouter un outil</span>
               </button>
             </div>
           </div>
@@ -94,49 +100,53 @@
           <div class="preview-header">
             <button class="btn-primary" id="copy-word">
               <i class="fa-solid fa-copy"></i>
-              Copier pour Word
+              <span data-i18n="btn-copy-word">Copier pour Word</span>
+            </button>
+            <button class="btn-primary btn-pdf" id="export-pdf">
+              <i class="fa-solid fa-file-pdf"></i>
+              <span data-i18n="btn-export-pdf">Télécharger PDF</span>
             </button>
           </div>
 
           <div class="doc-container" id="printable-doc">
             <div class="doc-header">
-              <h2>Déclaration d'intégrité intellectuelle</h2>
+              <h2 data-i18n="doc-title">Déclaration d'intégrité intellectuelle</h2>
               <p id="preview-cegep">...</p>
             </div>
 
             <div class="doc-meta">
-              <p><strong>Étudiant(e) :</strong> <span id="preview-name">...</span></p>
-              <p><strong>Cours :</strong> <span id="preview-course">...</span></p>
-              <p><strong>Groupe :</strong> <span id="preview-group">...</span></p>
+              <p><strong data-i18n="doc-student">Étudiant(e) :</strong> <span id="preview-name">...</span></p>
+              <p><strong data-i18n="doc-course">Cours :</strong> <span id="preview-course">...</span></p>
+              <p><strong data-i18n="doc-group">Groupe :</strong> <span id="preview-group">...</span></p>
             </div>
 
             <div class="doc-content">
-              <h3>Engagement</h3>
-              <p>
-                Je, soussigné(e) <strong id="preview-name-inline">...</strong>, atteste que le travail remis dans le cadre du cours <strong id="preview-course-inline">...</strong> est le fruit de ma propre réflexion, rédaction et qu'il respecte les règles de l'intégrité intellectuelle de mon institution.
+              <h3 data-i18n="doc-commitment-title">Engagement</h3>
+              <p id="doc-engagement-text">
+                <span data-i18n="doc-engagement-1">Je, soussigné(e) </span><strong id="preview-name-inline">...</strong><span data-i18n="doc-engagement-2">, atteste que le travail remis dans le cadre du cours </span><strong id="preview-course-inline">...</strong><span data-i18n="doc-engagement-3"> est le fruit de ma propre réflexion, rédaction et qu'il respecte les règles de l'intégrité intellectuelle de mon institution.</span>
               </p>
               <p class="paragraph-mt">
-                J'ai identifié et cité toutes les sources documentaires utilisées dans la Bibliographie.<br>
-                J'ai fait preuve de transparence quant à l'usage d'outils numériques (voir section IAgraphie ci-dessous).
+                <span data-i18n="doc-rules-1">J'ai identifié et cité toutes les sources documentaires utilisées dans la Bibliographie.</span><br>
+                <span data-i18n="doc-rules-2">J'ai fait preuve de transparence quant à l'usage d'outils numériques (voir section IAgraphie ci-dessous).</span>
               </p>
 
               <div class="declaration-item">
                 <span class="preview-checkbox" id="check-no-ia">X</span>
-                <p>Je confirme que je n’ai utilisé aucune intelligence artificielle générative pour la réalisation de ce travail.</p>
+                <p data-i18n="doc-confirm-no">Je confirme que je n’ai utilisé aucune intelligence artificielle générative pour la réalisation de ce travail.</p>
               </div>
 
               <div class="declaration-item">
                 <span class="preview-checkbox" id="check-yes-ia"></span>
-                <p>Je confirme avoir utilisé des outils d'intelligence artificielle générative selon les modalités précisées ci-dessous :</p>
+                <p data-i18n="doc-confirm-yes">Je confirme avoir utilisé des outils d'intelligence artificielle générative selon les modalités précisées ci-dessous :</p>
               </div>
 
               <div id="preview-yes-ia" class="hide">
                 <table class="iagraphie-table">
                   <thead>
                     <tr>
-                      <th>Outil utilisé</th>
-                      <th>Nature de la contribution</th>
-                      <th>Détails / Prompts utilisés</th>
+                      <th data-i18n="th-tool">Outil utilisé</th>
+                      <th data-i18n="th-nature">Nature de la contribution</th>
+                      <th data-i18n="th-details">Détails / Prompts utilisés</th>
                     </tr>
                   </thead>
                   <tbody id="preview-tools-body">
@@ -146,8 +156,8 @@
               </div>
 
               <div class="doc-footer">
-                <p>Date : <span id="current-date"></span></p>
-                <p>Signature : _____________________________</p>
+                <p><span data-i18n="doc-date">Date : </span><span id="current-date"></span></p>
+                <p><span data-i18n="doc-signature">Signature : </span>_____________________________</p>
               </div>
             </div>
           </div>

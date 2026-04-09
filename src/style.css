@@ -64,6 +64,33 @@ header {
   opacity: 0.7;
 }
 
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.lang-switcher button {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.lang-switcher button:hover {
+  color: var(--primary-color);
+}
+
+.lang-switcher button.active {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
 /* Main Layout */
 main {
   display: grid;
@@ -350,6 +377,15 @@ body {
   box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
 }
 
+.btn-pdf {
+  background: var(--secondary-color);
+  box-shadow: 0 4px 15px rgba(5, 150, 105, 0.2);
+}
+
+.btn-pdf:hover {
+  box-shadow: 0 6px 20px rgba(5, 150, 105, 0.3);
+}
+
 .btn-secondary {
   background: var(--bg-dark);
   color: var(--primary-color);
@@ -439,4 +475,25 @@ body {
   font-weight: bold;
   font-family: Arial, sans-serif;
   font-size: 14px;
+}
+
+@media print {
+  body {
+    background: white;
+  }
+  main {
+    display: block;
+  }
+  .form-panel, header, .preview-header {
+    display: none !important;
+  }
+  .preview-panel {
+    padding: 0;
+    background: white;
+  }
+  .doc-container {
+    box-shadow: none;
+    padding: 0;
+    max-width: none;
+  }
 }

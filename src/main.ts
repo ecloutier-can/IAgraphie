@@ -36,49 +36,254 @@ const previewToolsBody = document.getElementById('preview-tools-body') as HTMLTa
 const currentDateSpan = document.getElementById('current-date') as HTMLSpanElement;
 const copyWordBtn = document.getElementById('copy-word') as HTMLButtonElement;
 
-// Constants
-const TOOL_OPTIONS = [
-  'ChatGPT', 'Gemini', 'Claude', 'Copilot', 'Perplexity', 'Antidote (IA)', 'Autre'
-];
+const TRANSLATIONS: Record<string, any> = {
+  fr: {
+    'main-title': "Générateur D'IAgraphie",
+    'main-subtitle': "Outil de déclaration d'intégrité intellectuelle",
+    'id-title': "Identification",
+    'id-name': "Nom complet",
+    'id-cegep': "Établissement",
+    'id-course': "Cours",
+    'id-group': "Groupe",
+    'placeholder-name': "Prénom Nom",
+    'placeholder-cegep': "ex: Votre établissement",
+    'placeholder-course': "Nom du cours",
+    'placeholder-group': "ex: 0001",
+    'ia-usage-title': "Utilisation de l'intelligence artificielle",
+    'ia-usage-desc': "Avez-vous utilisé un outil d'IA générative pour ce travail ?",
+    'btn-no-ia': "Non, aucune IA",
+    'btn-yes-ia': "Oui, j'ai utilisé l'IA",
+    'advisory-text': "La transparence ne pénalise pas votre travail. Elle valorise votre démarche intellectuelle et permet à votre professeur d’évaluer votre contribution de façon juste et éclairée.",
+    'ia-details-title': "Détails de l'IAgraphie",
+    'ia-details-info': "Décrivez comment vous avez utilisé l'IA. Soyez transparent et précis sur les invites (prompts).",
+    'btn-add-tool': "Ajouter un outil",
+    'btn-copy-word': "Copier pour Word",
+    'btn-export-pdf': "Télécharger PDF",
+    'doc-title': "Déclaration d'intégrité intellectuelle",
+    'doc-student': "Étudiant(e) :",
+    'doc-course': "Cours :",
+    'doc-group': "Groupe :",
+    'doc-commitment-title': "Engagement",
+    'doc-engagement-1': "Je, soussigné(e) ",
+    'doc-engagement-2': ", atteste que le travail remis dans le cadre du cours ",
+    'doc-engagement-3': " est le fruit de ma propre réflexion, rédaction et qu'il respecte les règles de l'intégrité intellectuelle de mon institution.",
+    'doc-rules-1': "J'ai identifié et cité toutes les sources documentaires utilisées dans la Bibliographie.",
+    'doc-rules-2': "J'ai fait preuve de transparence quant à l'usage d'outils numériques (voir section IAgraphie ci-dessous).",
+    'doc-confirm-no': "Je confirme que je n’ai utilisé aucune intelligence artificielle générative pour la réalisation de ce travail.",
+    'doc-confirm-yes': "Je confirme avoir utilisé des outils d'intelligence artificielle générative selon les modalités précisées ci-dessous :",
+    'th-tool': "Outil utilisé",
+    'th-nature': "Nature de la contribution",
+    'th-details': "Détails / Prompts utilisés",
+    'doc-date': "Date : ",
+    'doc-signature': "Signature : ",
+    'tool-label': "Outil utilisé",
+    'nature-label': "Nature de la contribution",
+    'details-label': "Détails / Prompts utilisés",
+    'details-placeholder': "Ex: J'ai demandé à ChatGPT de structurer mon plan avec l'invite suivante : [...]",
+    'no-details': "<i>Aucun détail fourni</i>",
+    'copy-success': "Copié !",
+    'pdf-filename': "IAgraphie_Declaration.pdf",
+    'tool-options': ['ChatGPT', 'Gemini', 'Claude', 'Copilot', 'Perplexity', 'Antidote (IA)', 'Autre'],
+    'contribution-options': [
+      'Idéation / Tempête d\'idées',
+      'Planification du travail',
+      'Recherche d\'informations',
+      'Rédaction de segments de texte',
+      'Correction linguistique / Reformulation',
+      'Traduction',
+      'Génération d\'images / médias',
+      'Autre'
+    ]
+  },
+  en: {
+    'main-title': "AIgraphy Generator",
+    'main-subtitle': "Intellectual Integrity Declaration Tool",
+    'id-title': "Identification",
+    'id-name': "Full Name",
+    'id-cegep': "Institution",
+    'id-course': "Course",
+    'id-group': "Group",
+    'placeholder-name': "First Last Name",
+    'placeholder-cegep': "ex: Your Institution",
+    'placeholder-course': "Course Name",
+    'placeholder-group': "ex: 0001",
+    'ia-usage-title': "Use of Artificial Intelligence",
+    'ia-usage-desc': "Did you use generative AI for this assignment?",
+    'btn-no-ia': "No, no AI used",
+    'btn-yes-ia': "Yes, I used AI",
+    'advisory-text': "Transparency does not penalize your work. It enhances your intellectual process and allows your professor to evaluate your contribution fairly and accurately.",
+    'ia-details-title': "AIgraphy Details",
+    'ia-details-info': "Describe how you used AI. Be transparent and specific about the prompts used.",
+    'btn-add-tool': "Add a tool",
+    'btn-copy-word': "Copy for Word",
+    'btn-export-pdf': "Download PDF",
+    'doc-title': "Declaration of Intellectual Integrity",
+    'doc-student': "Student:",
+    'doc-course': "Course:",
+    'doc-group': "Group:",
+    'doc-commitment-title': "Commitment",
+    'doc-engagement-1': "I, the undersigned ",
+    'doc-engagement-2': ", certify that the work submitted for the course ",
+    'doc-engagement-3': " is the result of my own reflection and writing, and that it respects the intellectual integrity rules of my institution.",
+    'doc-rules-1': "I have identified and cited all documentary sources used in the Bibliography.",
+    'doc-rules-2': "I have been transparent about the use of digital tools (see AIgraphy section below).",
+    'doc-confirm-no': "I confirm that I did not use any generative artificial intelligence to complete this work.",
+    'doc-confirm-yes': "I confirm that I used generative artificial intelligence tools according to the procedures specified below:",
+    'th-tool': "Tool used",
+    'th-nature': "Nature of contribution",
+    'th-details': "Details / Prompts used",
+    'doc-date': "Date: ",
+    'doc-signature': "Signature: ",
+    'tool-label': "Tool used",
+    'nature-label': "Nature of contribution",
+    'details-label': "Details / Prompts used",
+    'details-placeholder': "Ex: I asked ChatGPT to structure my plan with the following prompt: [...]",
+    'no-details': "<i>No details provided</i>",
+    'copy-success': "Copied!",
+    'pdf-filename': "AIgraphy_Declaration.pdf",
+    'tool-options': ['ChatGPT', 'Gemini', 'Claude', 'Copilot', 'Perplexity', 'Antidote (AI)', 'Other'],
+    'contribution-options': [
+      'Ideation / Brainstorming',
+      'Work planning',
+      'Information research',
+      'Writing text segments',
+      'Linguistic correction / Reformulation',
+      'Translation',
+      'Image / Media generation',
+      'Other'
+    ]
+  }
+};
 
-const CONTRIBUTION_OPTIONS = [
-  'Idéation / Tempête d\'idées',
-  'Planification du travail',
-  'Recherche d\'informations',
-  'Rédaction de segments de texte',
-  'Correction linguistique / Reformulation',
-  'Traduction',
-  'Génération d\'images / médias',
-  'Autre'
-];
+let currentLang = 'fr';
 
 // Initialize
 function init() {
   const now = new Date();
-  currentDateSpan.textContent = now.toLocaleDateString('fr-CA', { 
+  currentDateSpan.textContent = now.toLocaleDateString(currentLang === 'fr' ? 'fr-CA' : 'en-CA', { 
     year: 'numeric', 
     month: 'long', 
     day: 'numeric' 
   });
 
   // Sync basic info
-  nameInput.addEventListener('input', updatePreview);
-  courseInput.addEventListener('input', updatePreview);
-  cegepInput.addEventListener('input', updatePreview);
-  groupInput.addEventListener('input', updatePreview);
+  nameInput.addEventListener('input', () => { updatePreview(); saveState(); });
+  courseInput.addEventListener('input', () => { updatePreview(); saveState(); });
+  cegepInput.addEventListener('input', () => { updatePreview(); saveState(); });
+  groupInput.addEventListener('input', () => { updatePreview(); saveState(); });
 
   // Toggle IA
-  btnNoIa.addEventListener('click', () => setIAStatus(false));
-  btnYesIa.addEventListener('click', () => setIAStatus(true));
+  btnNoIa.addEventListener('click', () => { setIAStatus(false); saveState(); });
+  btnYesIa.addEventListener('click', () => { setIAStatus(true); saveState(); });
 
   // Add tool
-  addToolBtn.addEventListener('click', addTool);
+  addToolBtn.addEventListener('click', () => { addTool(); saveState(); });
 
   // Copy button
   copyWordBtn.addEventListener('click', copyToClipboard);
 
+  // PDF Export
+  document.getElementById('export-pdf')?.addEventListener('click', exportToPDF);
+
+  // Language Switcher
+  document.getElementById('lang-fr')?.addEventListener('click', () => setLanguage('fr'));
+  document.getElementById('lang-en')?.addEventListener('click', () => setLanguage('en'));
+
+  // Load state
+  loadState();
+
   // Initial render
   updatePreview();
+}
+
+function setLanguage(lang: string) {
+  currentLang = lang;
+  
+  // Update buttons state
+  document.getElementById('lang-fr')?.classList.toggle('active', lang === 'fr');
+  document.getElementById('lang-en')?.classList.toggle('active', lang === 'en');
+
+  // Update static text
+  const elements = document.querySelectorAll('[data-i18n]');
+  elements.forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (key && TRANSLATIONS[lang][key]) {
+      el.innerHTML = TRANSLATIONS[lang][key];
+    }
+  });
+
+  // Update placeholders
+  const placeholders = document.querySelectorAll('[data-i18n-placeholder]');
+  placeholders.forEach(el => {
+    const key = el.getAttribute('data-i18n-placeholder');
+    if (key && TRANSLATIONS[lang][key]) {
+      (el as HTMLInputElement).placeholder = TRANSLATIONS[lang][key];
+    }
+  });
+
+  // Update date format
+  const now = new Date();
+  currentDateSpan.textContent = now.toLocaleDateString(lang === 'fr' ? 'fr-CA' : 'en-CA', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  });
+
+  renderTools();
+  updatePreview();
+  saveState();
+}
+
+function saveState() {
+  const state = {
+    name: nameInput.value,
+    cegep: cegepInput.value,
+    course: courseInput.value,
+    group: groupInput.value,
+    hasIA,
+    tools,
+    lang: currentLang
+  };
+  localStorage.setItem('iagraphie_state', JSON.stringify(state));
+}
+
+function loadState() {
+  const saved = localStorage.getItem('iagraphie_state');
+  if (saved) {
+    try {
+      const state = JSON.parse(saved);
+      nameInput.value = state.name || '';
+      cegepInput.value = state.cegep || '';
+      courseInput.value = state.course || '';
+      groupInput.value = state.group || '';
+      hasIA = state.hasIA ?? false;
+      tools = state.tools || [];
+      
+      if (state.lang) {
+        setLanguage(state.lang);
+      }
+      
+      setIAStatus(hasIA);
+    } catch (e) {
+      console.error('Error loading state', e);
+    }
+  }
+}
+
+async function exportToPDF() {
+  const element = document.getElementById('printable-doc');
+  if (!element) return;
+
+  const opt = {
+    margin: 10,
+    filename: TRANSLATIONS[currentLang]['pdf-filename'],
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
+
+  // @ts-ignore
+  html2pdf().set(opt).from(element).save();
 }
 
 function setIAStatus(status: boolean) {
@@ -100,18 +305,23 @@ function setIAStatus(status: boolean) {
     checkNoIa.textContent = 'X';
   }
   updatePreview();
+  saveState();
 }
 
 function addTool() {
+  const toolOptions = TRANSLATIONS[currentLang]['tool-options'];
+  const contributionOptions = TRANSLATIONS[currentLang]['contribution-options'];
+  
   const newTool: IATool = {
     id: Math.random().toString(36).substr(2, 9),
-    name: TOOL_OPTIONS[0],
-    contribution: CONTRIBUTION_OPTIONS[0],
+    name: toolOptions[0],
+    contribution: contributionOptions[0],
     details: ''
   };
   tools.push(newTool);
   renderTools();
   updatePreview();
+  saveState();
 }
 
 function removeTool(id: string) {
@@ -130,6 +340,9 @@ function updateTool(id: string, field: keyof IATool, value: string) {
 
 function renderTools() {
   toolsListContainer.innerHTML = '';
+  const toolOptions = TRANSLATIONS[currentLang]['tool-options'];
+  const contributionOptions = TRANSLATIONS[currentLang]['contribution-options'];
+
   tools.forEach(tool => {
     const row = document.createElement('div');
     row.className = 'tool-row';
@@ -137,30 +350,30 @@ function renderTools() {
       <button class="remove-tool" data-id="${tool.id}"><i class="fa-solid fa-trash"></i></button>
       <div class="form-group">
         <div class="step-badge"></div>
-        <label>Outil utilisé</label>
+        <label>${TRANSLATIONS[currentLang]['tool-label']}</label>
         <select class="tool-name" data-id="${tool.id}">
-          ${TOOL_OPTIONS.map(opt => `<option value="${opt}" ${opt === tool.name ? 'selected' : ''}>${opt}</option>`).join('')}
+          ${toolOptions.map((opt: string) => `<option value="${opt}" ${opt === tool.name ? 'selected' : ''}>${opt}</option>`).join('')}
         </select>
       </div>
       <div class="form-group">
         <div class="step-badge"></div>
-        <label>Nature de la contribution</label>
+        <label>${TRANSLATIONS[currentLang]['nature-label']}</label>
         <select class="tool-contribution" data-id="${tool.id}">
-          ${CONTRIBUTION_OPTIONS.map(opt => `<option value="${opt}" ${opt === tool.contribution ? 'selected' : ''}>${opt}</option>`).join('')}
+          ${contributionOptions.map((opt: string) => `<option value="${opt}" ${opt === tool.contribution ? 'selected' : ''}>${opt}</option>`).join('')}
         </select>
       </div>
       <div class="form-group">
         <div class="step-badge"></div>
-        <label>Détails / Prompts utilisés</label>
-        <textarea class="tool-details" data-id="${tool.id}" rows="2" placeholder="Ex: J'ai demandé à ChatGPT de structurer mon plan avec l'invite suivante : [...]">${tool.details}</textarea>
+        <label>${TRANSLATIONS[currentLang]['details-label']}</label>
+        <textarea class="tool-details" data-id="${tool.id}" rows="2" placeholder="${TRANSLATIONS[currentLang]['details-placeholder']}">${tool.details}</textarea>
       </div>
     `;
 
     // Events
-    row.querySelector('.remove-tool')?.addEventListener('click', () => removeTool(tool.id));
-    row.querySelector('.tool-name')?.addEventListener('change', (e) => updateTool(tool.id, 'name', (e.target as HTMLSelectElement).value));
-    row.querySelector('.tool-contribution')?.addEventListener('change', (e) => updateTool(tool.id, 'contribution', (e.target as HTMLSelectElement).value));
-    row.querySelector('.tool-details')?.addEventListener('input', (e) => updateTool(tool.id, 'details', (e.target as HTMLTextAreaElement).value));
+    row.querySelector('.remove-tool')?.addEventListener('click', () => { removeTool(tool.id); saveState(); });
+    row.querySelector('.tool-name')?.addEventListener('change', (e) => { updateTool(tool.id, 'name', (e.target as HTMLSelectElement).value); saveState(); });
+    row.querySelector('.tool-contribution')?.addEventListener('change', (e) => { updateTool(tool.id, 'contribution', (e.target as HTMLSelectElement).value); saveState(); });
+    row.querySelector('.tool-details')?.addEventListener('input', (e) => { updateTool(tool.id, 'details', (e.target as HTMLTextAreaElement).value); saveState(); });
 
     toolsListContainer.appendChild(row);
   });
@@ -183,7 +396,7 @@ function updatePreview() {
       <tr>
         <td>${tool.name}</td>
         <td>${tool.contribution}</td>
-        <td>${tool.details ? linkify(tool.details) : '<i>Aucun détail fourni</i>'}</td>
+        <td>${tool.details ? linkify(tool.details) : TRANSLATIONS[currentLang]['no-details']}</td>
       </tr>
     `).join('');
   }
@@ -249,7 +462,7 @@ async function copyToClipboard() {
     await navigator.clipboard.write(data);
     
     const originalText = copyWordBtn.innerHTML;
-    copyWordBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copié !';
+    copyWordBtn.innerHTML = `<i class="fa-solid fa-check"></i> ${TRANSLATIONS[currentLang]['copy-success']}`;
     copyWordBtn.classList.add('btn-secondary');
     
     setTimeout(() => {
@@ -258,7 +471,7 @@ async function copyToClipboard() {
     }, 2000);
   } catch (err) {
     console.error('Erreur lors de la copie :', err);
-    alert('Désolé, la copie directe a échoué. Veuillez sélectionner le texte manuellement.');
+    alert(currentLang === 'fr' ? 'Désolé, la copie directe a échoué. Veuillez sélectionner le texte manuellement.' : 'Sorry, direct copy failed. Please select the text manually.');
   }
 }
 
