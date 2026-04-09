@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IAgraphie | Cégep de Thetford</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <div class="logo-container">
+          <div class="header-title">
+            <h1>Générateur D'IAgraphie</h1>
+            <p>Outil de déclaration d'intégrité intellectuelle</p>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <!-- Form Panel -->
+        <section class="form-panel">
+          <div class="card">
+            <h3>Identification</h3>
+            <div class="form-group">
+              <label for="name">Nom complet</label>
+              <input type="text" id="name" placeholder="Prénom Nom" autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label for="cegep">Votre Cégep</label>
+              <input type="text" id="cegep" placeholder="ex: Cégep de Thetford">
+            </div>
+            <div class="form-group">
+              <label for="course">Cours</label>
+              <input type="text" id="course" placeholder="Nom du cours">
+            </div>
+            <div class="form-group">
+              <label for="group">Groupe</label>
+              <input type="text" id="group" placeholder="ex: 0001">
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Utilisation de l'intelligence artificielle</h3>
+            <p class="footer-info ia-description">Avez-vous utilisé un outil d'IA générative pour ce travail ?</p>
+            <div class="toggle-group">
+              <button class="toggle-btn active" id="btn-no-ia">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Non, aucune IA</span>
+              </button>
+              <button class="toggle-btn" id="btn-yes-ia">
+                <i class="fa-solid fa-robot"></i>
+                <span>Oui, j'ai utilisé l'IA</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-advisory">
+            <i class="fa-solid fa-lightbulb"></i>
+            <p>La transparence ne pénalise pas votre travail. Elle valorise votre démarche intellectuelle et permet à votre professeur d’évaluer votre contribution de façon juste et éclairée.</p>
+          </div>
+
+          <div id="ia-details" class="hide">
+            <div class="card">
+              <h3>Détails de l'IAgraphie</h3>
+              <div class="alert-info">
+                <i class="fa-solid fa-info-circle"></i>
+                Décrivez comment vous avez utilisé l'IA. Soyez transparent et précis sur les invites (prompts).
+              </div>
+              
+              <div id="tools-list">
+                <!-- Tool rows injected here -->
+              </div>
+
+              <button class="add-tool-btn" id="add-tool">
+                <i class="fa-solid fa-plus"></i>
+                Ajouter un outil
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Preview Panel -->
+        <section class="preview-panel">
+          <div class="preview-header">
+            <button class="btn-primary" id="copy-word">
+              <i class="fa-solid fa-copy"></i>
+              Copier pour Word
+            </button>
+          </div>
+
+          <div class="doc-container" id="printable-doc">
+            <div class="doc-header">
+              <h2>Déclaration d'intégrité intellectuelle</h2>
+              <p id="preview-cegep">...</p>
+            </div>
+
+            <div class="doc-meta">
+              <p><strong>Étudiant(e) :</strong> <span id="preview-name">...</span></p>
+              <p><strong>Cours :</strong> <span id="preview-course">...</span></p>
+              <p><strong>Groupe :</strong> <span id="preview-group">...</span></p>
+            </div>
+
+            <div class="doc-content">
+              <h3>Engagement</h3>
+              <p>
+                Je, soussigné(e) <strong id="preview-name-inline">...</strong>, atteste que le travail remis dans le cadre du cours <strong id="preview-course-inline">...</strong> est le fruit de ma propre réflexion, rédaction et qu'il respecte les règles de l'intégrité intellectuelle du Cégep.
+              </p>
+              <p class="paragraph-mt">
+                J'ai identifié et cité toutes les sources documentaires utilisées dans la Bibliographie.<br>
+                J'ai fait preuve de transparence quant à l'usage d'outils numériques (voir section IAgraphie ci-dessous).
+              </p>
+
+              <div class="declaration-item">
+                <span class="preview-checkbox" id="check-no-ia">X</span>
+                <p>Je confirme que je n’ai utilisé aucune intelligence artificielle générative pour la réalisation de ce travail.</p>
+              </div>
+
+              <div class="declaration-item">
+                <span class="preview-checkbox" id="check-yes-ia"></span>
+                <p>Je confirme avoir utilisé des outils d'intelligence artificielle générative selon les modalités précisées ci-dessous :</p>
+              </div>
+
+              <div id="preview-yes-ia" class="hide">
+                <table class="iagraphie-table">
+                  <thead>
+                    <tr>
+                      <th>Outil utilisé</th>
+                      <th>Nature de la contribution</th>
+                      <th>Détails / Prompts utilisés</th>
+                    </tr>
+                  </thead>
+                  <tbody id="preview-tools-body">
+                    <!-- Preview rows injected here -->
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="doc-footer">
+                <p>Date : <span id="current-date"></span></p>
+                <p>Signature : _____________________________</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
