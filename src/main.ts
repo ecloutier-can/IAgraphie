@@ -83,6 +83,8 @@ const TRANSLATIONS: Record<string, any> = {
     'no-details': "<i>Aucun détail fourni</i>",
     'copy-success': "Copié !",
     'pdf-filename': "IAgraphie_Declaration.pdf",
+    'reset-confirm': "Effacer toutes les données et recommencer ?",
+    'reset-tooltip': "Remise à zéro",
     'tool-options': ['ChatGPT', 'Gemini', 'Claude', 'Copilot', 'Perplexity', 'Antidote (IA)', 'Autre'],
     'contribution-options': [
       'Idéation / Tempête d\'idées',
@@ -141,6 +143,8 @@ const TRANSLATIONS: Record<string, any> = {
     'no-details': "<i>No details provided</i>",
     'copy-success': "Copied!",
     'pdf-filename': "AIgraphy_Declaration.pdf",
+    'reset-confirm': "Clear all data and start over?",
+    'reset-tooltip': "Reset",
     'tool-options': ['ChatGPT', 'Gemini', 'Claude', 'Copilot', 'Perplexity', 'Antidote (AI)', 'Other'],
     'contribution-options': [
       'Ideation / Brainstorming',
@@ -189,6 +193,14 @@ function init() {
   document.getElementById('lang-fr')?.addEventListener('click', () => setLanguage('fr'));
   document.getElementById('lang-en')?.addEventListener('click', () => setLanguage('en'));
 
+  // Reset button
+  document.getElementById('reset-btn')?.addEventListener('click', () => {
+    if (confirm(TRANSLATIONS[currentLang]['reset-confirm'])) {
+      localStorage.removeItem('iagraphie_state');
+      location.reload();
+    }
+  });
+
   // Load state
   loadState();
 
@@ -209,6 +221,15 @@ function setLanguage(lang: string) {
     const key = el.getAttribute('data-i18n');
     if (key && TRANSLATIONS[lang][key]) {
       el.innerHTML = TRANSLATIONS[lang][key];
+    }
+  });
+
+  // Update tooltips
+  const tooltips = document.querySelectorAll('[data-i18n-title]');
+  tooltips.forEach(el => {
+    const key = el.getAttribute('data-i18n-title');
+    if (key && TRANSLATIONS[lang][key]) {
+      (el as HTMLElement).title = TRANSLATIONS[lang][key];
     }
   });
 

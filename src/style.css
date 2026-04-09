@@ -91,6 +91,24 @@ header {
   font-weight: 700;
 }
 
+.btn-reset {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+  margin-left: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.btn-reset:hover {
+  color: #ff4d4d;
+  background: rgba(255, 77, 77, 0.05);
+  transform: rotate(-15deg);
+}
+
 /* Main Layout */
 main {
   display: grid;
