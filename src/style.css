@@ -296,9 +296,11 @@ body {
 .preview-header {
   display: flex;
   justify-content: center;
+  gap: 1.5rem;
   padding: 2rem 0; /* Padding identique en haut et en bas du bouton */
   width: 100%;
   max-width: 800px;
+  position: relative;
 }
 
 .doc-container {
