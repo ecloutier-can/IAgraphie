@@ -136,18 +136,21 @@ function renderTools() {
     row.innerHTML = `
       <button class="remove-tool" data-id="${tool.id}"><i class="fa-solid fa-trash"></i></button>
       <div class="form-group">
+        <div class="step-badge"></div>
         <label>Outil utilisé</label>
         <select class="tool-name" data-id="${tool.id}">
           ${TOOL_OPTIONS.map(opt => `<option value="${opt}" ${opt === tool.name ? 'selected' : ''}>${opt}</option>`).join('')}
         </select>
       </div>
       <div class="form-group">
+        <div class="step-badge"></div>
         <label>Nature de la contribution</label>
         <select class="tool-contribution" data-id="${tool.id}">
           ${CONTRIBUTION_OPTIONS.map(opt => `<option value="${opt}" ${opt === tool.contribution ? 'selected' : ''}>${opt}</option>`).join('')}
         </select>
       </div>
       <div class="form-group">
+        <div class="step-badge"></div>
         <label>Détails / Prompts utilisés</label>
         <textarea class="tool-details" data-id="${tool.id}" rows="2" placeholder="Ex: J'ai demandé à ChatGPT de structurer mon plan avec l'invite suivante : [...]">${tool.details}</textarea>
       </div>
